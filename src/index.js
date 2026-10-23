@@ -51,13 +51,16 @@ export const THEMES = {
 
 export const AVAILABLE_THEMES = Object.keys(THEMES);
 
-// --- Layout Presets ---
+// --- Layout Presets & Ratios ---
 
 export const PRESETS = {
-  'og': { width: 1200, height: 630 },
-  'twitter': { width: 1200, height: 600 },
-  'github': { width: 1280, height: 640 },
-  'square': { width: 1080, height: 1080 }
+  'og': { width: 1200, height: 630, titleSize: 52, titleWrap: 28, subtitleSize: 22, subtitleWrap: 48, padding: 96 },
+  'twitter': { width: 1200, height: 600, titleSize: 52, titleWrap: 28, subtitleSize: 22, subtitleWrap: 48, padding: 96 },
+  'github': { width: 1280, height: 640, titleSize: 54, titleWrap: 30, subtitleSize: 24, subtitleWrap: 50, padding: 104 },
+  'banner': { width: 1200, height: 400, titleSize: 40, titleWrap: 36, subtitleSize: 18, subtitleWrap: 60, padding: 60 },
+  'compact': { width: 800, height: 420, titleSize: 36, titleWrap: 26, subtitleSize: 16, subtitleWrap: 42, padding: 56 },
+  'square': { width: 1080, height: 1080, titleSize: 64, titleWrap: 22, subtitleSize: 26, subtitleWrap: 38, padding: 112 },
+  'story': { width: 1080, height: 1920, titleSize: 76, titleWrap: 18, subtitleSize: 32, subtitleWrap: 32, padding: 128 }
 };
 
 export const AVAILABLE_PRESETS = Object.keys(PRESETS);
@@ -116,42 +119,60 @@ export function generateSvg(options = {}) {
   const width = customWidth || p.width;
   const height = customHeight || p.height;
 
-  const titleLines = wrapText(title, 28);
-  const subtitleLines = wrapText(subtitle, 48);
+  const pad = p.padding || 80;
+  const titleSize = p.titleSize || 48;
+  const subtitleSize = p.subtitleSize || 20;
+
+  const titleLines = wrapText(title, p.titleWrap || 28);
+  const subtitleLines = wrapText(subtitle, p.subtitleWrap || 45);
 
   const safeBadge = escapeXml(badge);
   const safeAuthor = escapeXml(author);
   const safeUrl = escapeXml(url);
 
-  const titleStartY = 240;
-  const titleLineHeight = 62;
-  const subtitleStartY = titleStartY + (titleLines.length * titleLineHeight) + 12;
-  const subtitleLineHeight = 32;
+  const titleLineHeight = Math.round(titleSize * 1.2);
+  const subtitleLineHeight = Math.round(subtitleSize * 1.45);
+
+  let titleStartY;
+  if (preset === 'banner') {
+    titleStartY = pad + 90;
+  } else if (preset === 'story') {
+    titleStartY = 580;
+  } else if (preset === 'square') {
+    titleStartY = 380;
+  } else {
+    titleStartY = pad + 130;
+  }
+
+  const subtitleStartY = titleStartY + (titleLines.length * titleLineHeight) + 10;
 
   let titleSvg = '';
   titleLines.forEach((line, idx) => {
-    titleSvg += `<text x="96" y="${titleStartY + (idx * titleLineHeight)}" fill="${t.textPrimary}" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="52" font-weight="700" letter-spacing="-0.025em">${escapeXml(line)}</text>\n`;
+    titleSvg += `<text x="${pad}" y="${titleStartY + (idx * titleLineHeight)}" fill="${t.textPrimary}" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="${titleSize}" font-weight="700" letter-spacing="-0.025em">${escapeXml(line)}</text>\n`;
   });
 
   let subtitleSvg = '';
   subtitleLines.forEach((line, idx) => {
-    subtitleSvg += `<text x="96" y="${subtitleStartY + (idx * subtitleLineHeight)}" fill="${t.textSecondary}" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="22" font-weight="400">${escapeXml(line)}</text>\n`;
+    subtitleSvg += `<text x="${pad}" y="${subtitleStartY + (idx * subtitleLineHeight)}" fill="${t.textSecondary}" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="${subtitleSize}" font-weight="400">${escapeXml(line)}</text>\n`;
   });
 
   let tagsSvg = '';
-  let tagX = 96;
-  const tagY = height - 96;
+  let tagX = pad;
+  const tagY = height - pad + 12;
 
   (tags || []).slice(0, 4).forEach(tag => {
     const safeTag = escapeXml(tag);
-    const tagWidth = safeTag.length * 9 + 28;
+    const fontSize = preset === 'compact' ? 11 : 13;
+    const tagWidth = safeTag.length * (fontSize * 0.65) + 24;
+    const tagHeight = preset === 'compact' ? 26 : 30;
+
     tagsSvg += `
-      <g transform="translate(${tagX}, ${tagY - 24})">
-        <rect width="${tagWidth}" height="32" rx="4" fill="${t.surface}" stroke="${t.border}" stroke-width="1" />
-        <text x="14" y="21" fill="${t.textSecondary}" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="13" font-weight="500">${safeTag}</text>
+      <g transform="translate(${tagX}, ${tagY - tagHeight})">
+        <rect width="${tagWidth}" height="${tagHeight}" rx="4" fill="${t.surface}" stroke="${t.border}" stroke-width="1" />
+        <text x="12" y="${tagHeight - 10}" fill="${t.textSecondary}" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="${fontSize}" font-weight="500">${safeTag}</text>
       </g>
     `;
-    tagX += tagWidth + 10;
+    tagX += tagWidth + 8;
   });
 
   const gridPattern = showGrid ? `
@@ -163,6 +184,8 @@ export function generateSvg(options = {}) {
     <rect width="${width}" height="${height}" fill="url(#dot-grid)" />
   ` : '';
 
+  const frameInset = preset === 'compact' ? 20 : 32;
+
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- Background Layer -->
@@ -170,13 +193,13 @@ export function generateSvg(options = {}) {
   ${gridPattern}
 
   <!-- Structural Frame Border -->
-  <rect x="32" y="32" width="${width - 64}" height="${height - 64}" rx="8" fill="none" stroke="${t.border}" stroke-width="1.5" />
+  <rect x="${frameInset}" y="${frameInset}" width="${width - (frameInset * 2)}" height="${height - (frameInset * 2)}" rx="8" fill="none" stroke="${t.border}" stroke-width="1.5" />
 
   <!-- Brand Top Header -->
-  <g transform="translate(96, 96)">
-    <rect width="${safeBadge.length * 9 + 24}" height="28" rx="4" fill="${t.accent}" />
-    <text x="12" y="19" fill="${t.accentText}" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="12" font-weight="700" letter-spacing="0.08em">${safeBadge}</text>
-    <text x="${width - 192}" y="19" text-anchor="end" fill="${t.textMuted}" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="14">${safeUrl}</text>
+  <g transform="translate(${pad}, ${pad - 8})">
+    <rect width="${safeBadge.length * 8 + 20}" height="26" rx="4" fill="${t.accent}" />
+    <text x="10" y="17" fill="${t.accentText}" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="11" font-weight="700" letter-spacing="0.08em">${safeBadge}</text>
+    <text x="${width - (pad * 2)}" y="18" text-anchor="end" fill="${t.textMuted}" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="13">${safeUrl}</text>
   </g>
 
   <!-- Title & Subtitle Typography -->
@@ -187,8 +210,8 @@ export function generateSvg(options = {}) {
   ${tagsSvg}
 
   <!-- Author Signature -->
-  <g transform="translate(${width - 96}, ${height - 96})">
-    <text x="0" y="0" text-anchor="end" fill="${t.textMuted}" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="500">Curated by <tspan fill="${t.textPrimary}" font-weight="600">${safeAuthor}</tspan></text>
+  <g transform="translate(${width - pad}, ${height - pad + 8})">
+    <text x="0" y="0" text-anchor="end" fill="${t.textMuted}" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="500">Curated by <tspan fill="${t.textPrimary}" font-weight="600">${safeAuthor}</tspan></text>
   </g>
 </svg>`.trim();
 }

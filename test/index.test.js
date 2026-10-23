@@ -9,6 +9,10 @@ test('constants export expected entries', () => {
   assert.ok(AVAILABLE_THEMES.includes('gold'));
   assert.ok(AVAILABLE_PRESETS.includes('og'));
   assert.ok(AVAILABLE_PRESETS.includes('twitter'));
+  assert.ok(AVAILABLE_PRESETS.includes('banner'));
+  assert.ok(AVAILABLE_PRESETS.includes('compact'));
+  assert.ok(AVAILABLE_PRESETS.includes('square'));
+  assert.ok(AVAILABLE_PRESETS.includes('story'));
 });
 
 test('generateSvg produces valid SVG string with title and metadata', () => {

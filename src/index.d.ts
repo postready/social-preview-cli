@@ -1,5 +1,5 @@
 export type ThemeName = 'dark' | 'light' | 'terminal' | 'gold';
-export type PresetName = 'og' | 'twitter' | 'github' | 'square';
+export type PresetName = 'og' | 'twitter' | 'github' | 'banner' | 'compact' | 'square' | 'story';
 
 export interface ThemeColors {
   bg: string;
@@ -11,6 +11,16 @@ export interface ThemeColors {
   accent: string;
   accentText: string;
   dotGrid: string;
+}
+
+export interface PresetLayout {
+  width: number;
+  height: number;
+  titleSize?: number;
+  titleWrap?: number;
+  subtitleSize?: number;
+  subtitleWrap?: number;
+  padding?: number;
 }
 
 export interface PreviewOptions {
@@ -30,7 +40,7 @@ export interface PreviewOptions {
 export declare const THEMES: Record<ThemeName, ThemeColors>;
 export declare const AVAILABLE_THEMES: ThemeName[];
 
-export declare const PRESETS: Record<PresetName, { width: number; height: number }>;
+export declare const PRESETS: Record<PresetName, PresetLayout>;
 export declare const AVAILABLE_PRESETS: PresetName[];
 
 export declare function generateSvg(options?: PreviewOptions): string;

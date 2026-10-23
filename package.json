@@ -1,6 +1,6 @@
 {
   "name": "social-preview-cli",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "High-performance CLI and Node.js library to generate developer-first social preview cards (OG Images) for GitHub, X, LinkedIn, and blogs. Pure SVG & Rust-backed PNG render.",
   "main": "src/index.js",
   "module": "src/index.js",

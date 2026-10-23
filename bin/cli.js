@@ -34,7 +34,10 @@ ${c.bold}OPTIONS:${c.reset}
   ${c.green}-s, --subtitle <text>${c.reset}   Subtitle description
   ${c.green}-o, --out <path>${c.reset}        Output file path (default: preview.png)
   ${c.green}-t, --theme <name>${c.reset}      Color theme: dark (default), light, terminal, gold
-  ${c.green}-p, --preset <name>${c.reset}     Size preset: og (1200x630, default), twitter, github, square
+  ${c.green}-p, --preset <name>${c.reset}     Size preset: og (1200x630, default), twitter (1200x600),
+                             github (1280x640), banner (1200x400 - wide header),
+                             compact (800x420 - feed-friendly), square (1080x1080),
+                             story (1080x1920 - vertical / mobile)
   ${c.green}-b, --badge <text>${c.reset}      Top brand badge label (default: POSTREADY.ORG)
   ${c.green}-a, --author <name>${c.reset}     Author name (default: eco-null)
   ${c.green}-u, --url <text>${c.reset}        URL or domain watermark (default: postready.org)

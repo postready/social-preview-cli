@@ -16,7 +16,7 @@ Part of the **[PostReady.org](https://postready.org)** open-source content repur
 ## Highlights
 
 - ⚡ **Ultra Fast & Lightweight:** Renders production-grade 1200x630 PNGs in under 50ms without launching a browser.
-- 📐 **Social Dimension Presets:** Built-in aspect ratios for Open Graph (`1200x630`), Twitter Summary Card (`1200x600`), GitHub Banner (`1280x640`), and Square (`1080x1080`).
+- 📐 **Social Dimension Presets:** Built-in aspect ratios for Open Graph (`1200x630`), Twitter Summary (`1200x600`), GitHub Banner (`1280x640`), Wide Banner (`1200x400`), Compact Feed (`800x420`), Square (`1080x1080`), and Mobile Story (`1080x1920`).
 - 🎨 **Minimalist Themes:** Handcrafted palettes designed for developers: `dark`, `light`, `terminal` (phosphor green), and `gold`.
 - 🔤 **Smart Typography Wrapping:** Automatically breaks long titles into balanced, readable lines with author signatures and tag pills.
 - 📦 **Dual Mode:** Use as an interactive terminal CLI (`npx social-preview`) or import directly into your Next.js / Node.js build pipelines.
@@ -68,7 +68,10 @@ OPTIONS:
   -s, --subtitle <text>   Subtitle description
   -o, --out <path>        Output file path (default: preview.png)
   -t, --theme <name>      Color theme: dark (default), light, terminal, gold
-  -p, --preset <name>     Size preset: og (1200x630, default), twitter, github, square
+  -p, --preset <name>     Size preset: og (1200x630, default), twitter (1200x600),
+                          github (1280x640), banner (1200x400 - wide header),
+                          compact (800x420 - feed-friendly), square (1080x1080),
+                          story (1080x1920 - vertical / mobile)
   -b, --badge <text>      Top brand badge label (default: POSTREADY.ORG)
   -a, --author <name>     Author name (default: eco-null)
   -u, --url <text>        URL or domain watermark (default: postready.org)
