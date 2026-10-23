@@ -1,0 +1,53 @@
+{
+  "name": "social-preview-cli",
+  "version": "1.0.0",
+  "description": "High-performance CLI and Node.js library to generate developer-first social preview cards (OG Images) for GitHub, X, LinkedIn, and blogs. Pure SVG & Rust-backed PNG render.",
+  "main": "src/index.js",
+  "module": "src/index.js",
+  "types": "src/index.d.ts",
+  "type": "module",
+  "bin": {
+    "social-preview": "bin/cli.js",
+    "social-preview-cli": "bin/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js",
+      "default": "./src/index.js"
+    }
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "start": "node bin/cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/postready/social-preview-cli.git"
+  },
+  "keywords": [
+    "og-image",
+    "social-preview",
+    "social-card",
+    "twitter-card",
+    "github-banner",
+    "svg",
+    "png",
+    "cli",
+    "developer-tools"
+  ],
+  "author": "eco-null <emrecanozdal@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2"
+  }
+}
