@@ -12,17 +12,15 @@
 Part of the **[PostReady.org](https://postready.org)** open-source content repurposing toolkit.
 
 ---
-
 ## Highlights
 
-- ⚡ **Ultra Fast & Lightweight:** Renders production-grade 1200x630 PNGs in under 50ms without launching a browser.
-- 📐 **Social Dimension Presets:** Built-in aspect ratios for Open Graph (`1200x630`), Twitter Summary (`1200x600`), GitHub Banner (`1280x640`), Wide Banner (`1200x400`), Compact Feed (`800x420`), Square (`1080x1080`), and Mobile Story (`1080x1920`).
-- 🎨 **Minimalist Themes:** Handcrafted palettes designed for developers: `dark`, `light`, `terminal` (phosphor green), and `gold`.
-- 🔤 **Smart Typography Wrapping:** Automatically breaks long titles into balanced, readable lines with author signatures and tag pills.
-- 📦 **Dual Mode:** Use as an interactive terminal CLI (`npx social-preview`) or import directly into your Next.js / Node.js build pipelines.
+- **Ultra Fast & Lightweight:** Renders production-grade 1200x630 PNGs in under 50ms without launching a browser.
+- **Social Dimension Presets:** Built-in aspect ratios for Open Graph (`1200x630`), Twitter Summary (`1200x600`), GitHub Banner (`1280x640`), Wide Banner (`1200x400`), Compact Feed (`800x420`), Square (`1080x1080`), and Mobile Story (`1080x1920`).
+- **Minimalist Themes:** Handcrafted palettes designed for developers: `dark`, `light`, `terminal` (phosphor green), and `gold`.
+- **Smart Typography Wrapping:** Automatically breaks long titles into balanced, readable lines with author signatures and tag pills.
+- **Dual Mode:** Use as an interactive terminal CLI (`npx social-preview`) or import directly into your Next.js / Node.js build pipelines.
 
 ---
-
 ## Quick Start (CLI)
 
 Generate a preview image instantly with `npx`:
@@ -57,7 +55,6 @@ npm install -g social-preview-cli
 ```
 
 ---
-
 ## CLI Options
 
 ```text
@@ -83,7 +80,6 @@ OPTIONS:
 ```
 
 ---
-
 ## Programmatic API
 
 Install locally:
@@ -119,7 +115,6 @@ const svgString = generateSvg({
 ```
 
 ---
-
 ## Theme Previews
 
 | Theme | Background | Text Primary | Accent Highlight |
@@ -130,7 +125,6 @@ const svgString = generateSvg({
 | `gold` | `#0a0a0c` (Obsidian) | `#fbf8ee` | `#d4af37` Warm Gold |
 
 ---
-
 ## Integration with PostReady
 
 This tool was designed for **[PostReady.org](https://postready.org)** — the AI content studio turning blog articles, podcasts, and notes into publish-ready X threads and LinkedIn carousels.
@@ -141,7 +135,6 @@ Explore other tools in the ecosystem:
 - [awesome-tech-hooks](https://github.com/postready/awesome-tech-hooks) — 500+ curated viral hooks and frameworks.
 
 ---
-
 ## License
 
 MIT © [eco-null](https://github.com/eco-null)
